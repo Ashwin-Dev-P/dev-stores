@@ -17,6 +17,35 @@ django-heroku = "*"
 gunicorn = "*"
 Pillow = "*"
 
+asgiref = "*
+certifi = "*"
+chardet = "*"
+dj-database-url = "*"
+Django = "*"
+django-cors-headers = "*"
+django-paypal = "*"
+idna = "*"
+MouseInfo = "*"
+psycopg2 = "*"
+PyAutoGUI = "*"
+pycryptodome = "*"
+PyGetWindow = "*"
+PyMsgBox = "*"
+pyperclip = "*"
+PyRect = "*"
+PyScreeze = "*"
+PyTweening = "*"
+pytz = "*"
+razorpay = "*"
+requests = "*"
+selenium = "*"
+six = "*"
+sqlparse = "*"
+urllib3 = "*"
+whitenoise = "*"
+
+
+
 
 [dev-packages]
 

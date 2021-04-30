@@ -6,6 +6,7 @@ import json
 from .models import *
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
+import requests
 import os, sys
 sys.path.insert(1, os.getcwd()) 
 from pages.models import *

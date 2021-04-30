@@ -16,8 +16,7 @@ python_version = "3.6"
 django-heroku = "*"
 gunicorn = "*"
 Pillow = "*"
-
-asgiref = "*
+asgiref = "*"
 certifi = "*"
 chardet = "*"
 dj-database-url = "*"
@@ -43,8 +42,6 @@ six = "*"
 sqlparse = "*"
 urllib3 = "*"
 whitenoise = "*"
-
-
 
 
 [dev-packages]

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head1 %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment_selection.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class='min-height container'>
+        <div class='container'>
+            <ul class=' message' id='messages'>
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul> 
+        </div>
+        {% if cart_item_quantity > 0 %}
+        <div class='container col-xs-12 col-md-6' id='payment_methods_div'>
+
+            <!--Razorpay-->
+            <div >
+                <!--Razorpay button-->
+                <form action="payments/payment_success" method="POST">
+                    {% csrf_token %} 
+
+                    
+                    <script
+                    src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="rzp_test_L3MqRbPS31zt0Y" 
+                    data-amount="{{Final_pay_amount_for_razorpay }}" 
+                    data-currency="INR"
+                    data-order_id="{{payment.id}}"
+                    data-buttontext="Pay with Razorpay"
+                    data-name="Thumki"
+                    data-description="Thumki Stores"
+                    data-image="{% static 'images/ThumkiIcon.jpg' %}"
+                    data-prefill.name="{{user}}"
+                    data-prefill.email="{{user.email}}"
+                    data-theme.color="#F37254"
+                    ></script>
+                </form>
+            </div>
+
+
+            <div id='paytm_link'>
+                <!--Paytm button-->
+                <a href="{% url 'payment_paytm' %}"  style='color: #ffffff;'>Paytm</a>
+            </div>
+
+
+            <!--Paypal-->
+            <div>
+                <!-- Set up a container element for the button -->
+                <div id="paypal-button-container"></div>
+
+                <!-- Include the PayPal JavaScript SDK -->
+                <script src="https://www.paypal.com/sdk/js?client-id=AQrqu-fUHcMVllCyeKw1cpqjkcMdfuS2AB_tWgQuQBPxcNkkP-4dcyl5qVaOsKYiDsHVg4taA6ViFfiF&currency=USD"></script>
+
+                <script>
+                    // Render the PayPal button into #paypal-button-container
+                    paypal.Buttons({
+
+                        // Set up the transaction
+                        createOrder: function(data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: '{{paypal_amount}}'
+                                    }
+                                }]
+                            });
+                        },
+
+                        // Finalize the transaction
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(function(details) {
+                                // Show a success message to the buyer
+                                console.log(data)
+                                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+
+
+
+                                $.ajax({
+                                    type:'POST',
+                                    url:"{% url 'paypal_recieve'  %}",
+                                    data:
+                                    {
+                                       data,
+                                       
+                                    },
+
+                                    success:function(data){
+                    
+                                        const error_message_div = document.querySelector("#messages");
+                                        if(data.msgType === 'error'){
+                                            msgType = "error";
+                                        }
+                                        else if(data.msgType === 'success'){
+                                            msgType = "success";
+                                        }
+                                        else if(data.msgType === 'warning'){
+                                            msgType = "warning";
+                                        }
+                                        else{
+                                            msgType = "info";
+                                        }
+
+                                        string1 = "<li class='list-group-item " ;
+                                        
+                                        string3 = "'>";
+                                        message_string = data.msg;
+                                        string4 = "</li>";
+                                        string = " ";
+                                        string = string.concat(string1,msgType,string3,message_string,string4);
+                                        error_message_div.innerHTML = string;
+                                        
+                                        setTimeout(fade_out, 5000);
+
+                                        function fade_out() {
+                                            $("#messages").fadeOut().empty();
+                                        }
+
+                                    }
+
+
+
+
+
+
+
+                                })
+
+
+
+
+
+
+                                
+                            });
+                        }
+
+
+                    }).render('#paypal-button-container');
+                </script>
+                <!--Paypal ends here-->
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

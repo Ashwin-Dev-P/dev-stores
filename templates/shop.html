@@ -1,0 +1,60 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+{% endblock %}
+{% block content %}
+    
+    <div class='container'>
+        <main>
+            <div class='row'>
+                {% for dress in dresses %}
+                    <div class='col-xs-12 col-lg-4 product'>
+                        <a href='view/{{dress.id}}'>
+                            <div class="card card_with_image">
+                                <image class="card-img-top" src="{{dress.img.url}}" width='400' height='290' >
+                                
+                                {% if not dress.availability %}
+                                    <span class='sold'>Sold</span>
+                                {% endif %}
+
+                                <div class="card-body text-center">
+                                    <span class="card-title caps dress-name">{{dress.name}}</span>
+                                    <span><span class='price'>Rs.{{dress.price}}<span></span>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+
+            </div>
+            
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <nav aria-label="Page navigation example">
+                        <ol class="pagination justify-content-center">
+                                {% if previous_page_number %}
+                                <li class='page-item'><a class="page-link" href="{% url 'shop' %}?pg={{previous_page_number}}">Previous</a></li>
+                                {% endif %}
+
+
+                                <li class='page-item'><span class="page-link" >{{page_number}}</span></li>
+
+
+                                {% if next_page_number %}
+                                <li class='page-item'><a class="page-link" href="{% url 'shop' %}?pg={{next_page_number}}">Next</a></li>
+                                {% endif %}
+                            
+                            
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+    
+
+{% endblock %}

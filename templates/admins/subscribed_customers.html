@@ -1,0 +1,37 @@
+{% extends 'admins/base.html' %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <div class='container'>
+        <h1>Subscriptions</h1>
+        <table class='table table-bordered col-xs-12'>
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for account in subscribed_accounts %}
+            <tr>
+                <td>{{account.name}}</td>
+                <td>{{account.email}}</td>
+            
+            <tr>
+                
+                    
+                
+
+
+            
+            
+            
+        {% endfor %}
+            <tbody>
+        </table>
+    </div>
+{% endblock %}

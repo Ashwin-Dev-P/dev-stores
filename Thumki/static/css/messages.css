@@ -1,0 +1,13 @@
+body{
+    background-color: #fffffff ;
+}
+.messages_div{
+    background-color: #ffffff;
+    padding: 20px;
+}
+.mark_as_read_button{
+    float: right;
+}
+table{
+    padding: 10px;
+}

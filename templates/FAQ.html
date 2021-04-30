@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%  load static %}
+
+{% block head1 %}
+    <link rel='stylesheet' href="{% static 'css/faq.css' %}" >
+{% endblock  %}
+{% block content %}
+
+
+    <div class='min-height'>
+        <main>
+            <div class='container'>
+                 <div class="row  justify-content-md-center">
+                    <div class="col-xs-12">
+                        
+                        {% for object in faq %}
+                            <div class='each_faq_block'>
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-action standardlist listtopic" data-toggle="collapse" data-target="#demo{{object.id}}">{{object.question}} <i class="fa fa-angle-down down_arrow" aria-hidden="true"></i> </li>
+                                </ul>
+                                <div id="demo{{object.id}}" class="collapse container">
+                                    {{object.answer}}
+                                    
+                                </div> 
+                            </div>
+
+                        {% endfor %} 
+                    </div>
+		        </div>
+                 
+                      
+            </div>
+        </main>
+
+
+       
+
+    </div>
+
+{% endblock %}

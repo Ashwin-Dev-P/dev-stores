@@ -1,0 +1,73 @@
+{% extends 'admins/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!--Messages-->
+    <div class="mb-3 form-check">
+        <ul class=' message'>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <hr>
+    <h1 style='margin-top:20px'>
+            {% if read == False %}
+                Unread messages
+            {% else %}
+                Read messages
+            {% endif %}
+        </h1>
+    
+    {% if message_count != 0  %}
+    <div> 
+
+        
+        <hr>
+        <br>
+        <br>
+        {% for message in messages_recieved %}
+            <div class='shadow-lg messages_div'>
+                <br>
+                <br>
+                <br>
+                <table class='table table-bordered'>
+                        
+                    <tbody>
+                        <tr><td>Name</td><td>{{message.name}}</td></tr>
+                        <tr><td>Email</td><td>{{message.email}}</td></tr>
+                        <tr><td>Phone number</td><td>{{message.phone_number}}</td></tr>
+                        <tr><td>Date</td><td>{{message.date}}</td></tr>
+                        <tr><td>Message</td><td>{{message.message}}</td></tr>
+                        
+                    </tbody>
+                </table>
+
+                {% if not read %}
+                <form method='POST'>
+                    {% csrf_token %}
+                    <input type='number' min-value='1' name='message_id' value="{{message.id}}" hidden>
+                    <input type='submit' value='Mark as read' class='btn btn-primary mark_as_read_button' >
+                </form>
+                {% endif %}
+
+
+                <br>
+                <br>
+                <br>
+            </div>
+
+
+        <br>
+        <br>
+        {% endfor %} 
+    </div>
+    {% else %}
+        <div class='messages_div text-center'>
+            <h2 style=';padding-top:100px;padding-bottoM:100px;'>There are no messages</h2>
+        </div>
+    {% endif %}
+{% endblock %}

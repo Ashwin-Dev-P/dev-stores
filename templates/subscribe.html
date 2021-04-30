@@ -1,0 +1,79 @@
+{% extends 'base.html' %} 
+{%  load static %}
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+{% endblock %}
+{% block content %}
+    <div class='container'>
+        <main>
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <h1 id='heading1'>Subscription</h1>
+                </div>
+                <hr>
+                <div class='col-xs-12 offset-md-2 col-md-8 offset-lg-3 col-lg-6'>
+                    <form method='POST' id='myForm' class='shadow-sm'>
+                        {% csrf_token %}
+                        <div class='form-container'>
+                            <div class="mb-3 form-check">
+                                <label for='name' class="form-label">Name</label>
+                                <input type='text' class="form-control" name='name' id='name'
+                                {% if request.user.is_authenticated %}
+                                    value='{{user}}'
+                                
+                                {% endif %}
+                                >
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <label for='email' class="form-label">Email</label>
+                                <input type='email' class="form-control" name='email' id='email'
+                                    {% if request.user.is_authenticated %}
+                                        value='{{user.email}}'
+                                
+                                    {% endif %}
+                                >
+                            </div>
+
+                            
+                            
+                            <div class="mb-3 form-check">
+                                <input type='button' name='register' value='Subscribe' class='form-control btn' id='register' onclick="process(event)">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <ul class=' message' id='messages'>
+                                    {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        function process(event) {
+
+            const name = document.getElementById('name').value;
+            if( name.length < 1 ){
+                const error_message_div = document.querySelector("#messages");
+                error_message_div.innerHTML = "<li class='list-group-item error'> Enter your name. </li>";
+                return false;
+            }
+
+            const email = document.getElementById('email').value;
+            if( email.length < 1 ){
+                const error_message_div = document.querySelector("#messages");
+                error_message_div.innerHTML = "<li class='list-group-item error'> Enter your email. </li>";
+                return false;
+            }
+            
+            document.getElementById("myForm").submit();
+            return true;
+        }
+    </script>
+
+
+{% endblock %}

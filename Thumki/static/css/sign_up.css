@@ -1,0 +1,39 @@
+:root {
+    --register_background_colour:#af1f31;
+    --anchor-tag-colour: #af1f31 ;
+    --register-button-colour: #ffffff;
+  }
+
+form{
+    border: 1px solid #DFDDDD;
+    margin: 40px 0px 40px 0px;
+}
+input{
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+.form-container{
+    margin-top: 50px;
+}
+
+.form-control{
+    margin-left: 0%;
+    margin-right: 0%;
+    width: 100%;
+}
+.form-check{
+    padding-right: 1.25rem;
+    margin-bottom: 0px;
+}
+.red-anchor-tag{
+    color: var(--anchor-tag-colour);
+}
+#register{
+    background-color: var(--register_background_colour);
+    color: var(--register-button-colour);
+    margin-top: 30px;
+}
+#heading1{
+    font-size: 30px;
+    text-align: left;
+}

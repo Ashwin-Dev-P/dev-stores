@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+        <main>
+            <div class='row'>
+                <div class='col-xs-12 container'>
+                    <h1 id='heading1'>Your profile</h1>
+                    <hr>
+                </div>
+                
+                <div class='col-xs-12 offset-md-2 col-md-8 offset-lg-4 col-lg-4'>
+                    <form method='POST'  autocomplete="on" class='shadow'>
+                        {% csrf_token %}
+                        <div class='form-container'>
+                            <div class="mb-3 form-check" >
+                                <label for='username' class="form-label">Username</label>
+                                <input type='text' class="form-control" name='username' id='username' value="{{user_details.username}}" 
+                                {% if not edit%}
+                                    disabled
+                                {% endif %}
+                                 >
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <label for='first_name' class="form-label">First name</label>
+                                <input type='text' class="form-control" name='first_name' id='first_name' value="{{user_details.first_name}}"
+                                {% if not edit%}
+                                    disabled
+                                {% endif %}
+                                >
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <label for='last_name' class="form-label">Last name</label>
+                                <input type='text' class="form-control" name='last_name' id='last_name' value="{{user_details.last_name}}"
+                                {% if not edit%}
+                                    disabled
+                                {% endif %}
+                                
+                                >
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <label for='phone_number' class="form-label">Phone number</label>
+                                <input type='text' class="form-control" name='phone_number' id='phone_number' value="{{user_profile.phone_number}}"
+                                
+                                {% if not edit%}
+                                    disabled
+                                {% endif %}
+
+                                 >
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <label for='email' class="form-label">Email</label>
+                                <input type='email' class="form-control" name='email' id='email' value="{{user_details.email}}"
+                                
+                                {% if not edit%}
+                                    disabled
+                                {% endif %}
+
+                                >
+                            </div>
+
+                            
+
+                            <div class="mb-3 form-check">
+                                <label for='address' class="form-label">Address</label>
+                                <textarea type='email' class="form-control" name='address' id='address'
+                                
+                                {% if not edit%}
+                                    disabled
+                                {% endif %}
+                                
+                                >{{user_profile.address}}</textarea>
+                            </div>
+
+
+                            
+
+                            
+
+                            
+                            
+                            <div class="mb-3 form-check">
+                                {% if not edit %}
+                                <a class='form-control btn' id='register' href="{% url 'profile' 1 %}">Edit profile</a>
+                                {% else %}
+                                <input  type='submit' name='register'  class='form-control btn' id='register' value='Save' >
+                                {% endif %}
+
+                                
+                            </div>
+
+                            
+
+
+
+                            <div class="mb-3 form-check">
+                                <ul class=' message'>
+                                    {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </main>
+    
+
+{% endblock %}

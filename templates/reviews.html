@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reviews.css' %}">
+{% endblock  %}
+{% block content %}
+    <div class='col-xs-12'>
+        <h1 id='heading1'>Your reviews</h1>
+    </div>
+    <div class='container shadow'>
+        <p>
+            {% for review in reviews %}
+                <div class='review'>
+                    
+                    {% with ''|center:review.rating as range %}
+                    {% for _ in range %}
+                        <i class="fa fa-star yellow-star" id='star1'  ></i>
+                    {% endfor %}
+                    {% endwith %}
+
+
+                    <h5 id='reviews_individual_titles'>{{review.review_title}}</h5>
+                    <p class="card-text">By {{review.name}}</p>
+                    <p class="card-text">{{review.review}}</p>
+                    
+                </div>
+            {% endfor %}
+        </p>
+    </div>
+    <div class='row'>
+                <div class='col-xs-12'>
+                    <nav aria-label="Page navigation example">
+                        <ol class="pagination justify-content-center">
+                                {% if previous_page_number %}
+                                <li class='page-item'><a class="page-link" href="{% url 'reviews' %}?pg={{previous_page_number}}">Previous</a></li>
+                                {% endif %}
+
+
+                                <li class='page-item'><span class="page-link" >{{page_number}}</span></li>
+
+
+                                {% if next_page_number %}
+                                <li class='page-item'><a class="page-link" href="{% url 'reviews' %}?pg={{next_page_number}}">Next</a></li>
+                                {% endif %}
+                            
+                            
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+{% endblock %}

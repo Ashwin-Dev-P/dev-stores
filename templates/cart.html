@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+{% block content %}
+    <div class='container min-height'>
+        <main>
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <h1 id='heading1'>Shopping cart</h1>
+                </div>
+                <hr>
+                <div class="mb-3 form-check">
+                    <ul class=' message'>
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div class='col-xs-12'>
+                    
+                    {% for item in cart_items_list %}
+                    <div class='col-xs-12'>
+                    
+                        <div class='row '>
+                            <div class='col-xs-12 col-md-6 ' style="padding:0px;">
+                                <image src="{{item.img_url}}" id='image_explanation_first' >
+                            </div>
+                            <div class='col-xs-12 col-md-6  justify-content-center' id='image_explanation_first'>
+                                <div class='vertical_center '>
+                                    <h3 class='info_title dress-name'>{{item.name}}</h3>
+                                    <hr>
+                                    
+                                    <span id='add_to_cart_form'>
+                                        <div id='size' class='cart_item_details_div'>
+                                            <span class='heading-title'>Size: </span><span class='size'>{{item.size}}</span>  
+                                        </div>
+                                        <div class='cart_item_details_div'> 
+                                            Rs.{{item.price}}
+                                        </div>
+                                        <div id='quantity_div' class='cart_item_details_div'>
+                                            
+                                            <a href="/cart_subtract_quantity?item_id={{item.id}}"><span class='minus'><i class="fa fa-minus" aria-hidden="true"></i></span></a><span class='quantity'>{{item.quantity}}</span><a href="/cart_add_quantity?item_id={{item.id}}"><span class='plus'><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+                                            
+                                        </div>
+                                        
+                                        <div class='cart_item_details_div'>
+                                            <span class='heading-title'>Total:</span> Rs.{{item.total}}
+                                        </div>
+                                        <div class='remove-link'><a href="/cart_remove?item_id={{item.id}}">Remove <i class="fa fa-times" aria-hidden="true"></i></a></div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                    </div>
+                    <hr>
+                    {% endfor %}
+                    <div class='text-center'>
+
+                        <div class='row'>
+                            <div class='col-xs-12'>
+                                {% if cart_item_quantity == 0 %}
+                                    There are no items in your cart
+                                {% endif %}
+                            </div>
+
+                            {% if cart_item_quantity == 0 %}
+                            <div class='col-xs-12' style='margin-top:50px'>
+                                <a href="{% url 'index' %}" class='red_anchor_tag'>Start shopping</a>
+                            </div>
+                            {% endif %}
+
+                            {% if cart_item_quantity != 0 %}
+                            <div class='col-xs-12 text-left' >
+                                <span id='total_amount'>
+                                Total amount = Rs.{{Final_pay_amount}}
+                                </span>
+                            </div>
+                            {% endif %}
+                            <div id='continue_shopping_div' class='col-xs-12 col-md-6'>
+                                {% if cart_item_quantity != 0 %}
+                                    
+                                    <a href="{% url 'index' %}" class='red_anchor_tag' id='continue_shopping_button'  style='width:100%'>Back to shopping</a>
+                                {% endif %}
+                                
+                            </div>
+
+                            {% if cart_item_quantity != 0 %}
+                                <div class='col-xs-12 col-md-6' id='checkout_div'>   
+                                    <a href="{% url 'confirm_details' 0 %}" class='red_anchor_tag ' id='checkout_button' >Checkout <i class="fa fa-1x fa-shopping-cart"></i></a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                
+
+
+
+            </div>
+        </main>
+    </div>
+{% endblock %}

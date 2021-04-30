@@ -1,0 +1,109 @@
+{% extends 'admins/base.html' %}
+{% load static %}
+
+{% block head  %}
+    <link rel="stylesheet" href="{% static 'css/admins.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div>
+        <!--Messages-->
+        <div class="mb-3 form-check">
+            <ul class=' message'>
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+        <div>   
+            {% if not delivered %}
+                <h1>Undelivered</h1>
+            {% else %}
+                <h1>Delivered</h1>
+            {% endif %}
+        </div>
+        <hr>
+        <div class='my_divs'> 
+            <div>
+                <h2>Customer Details</h2>
+            </div>
+
+            <div>
+                <table class='table table-bordered'>
+                    
+                    <tbody>
+                        <tr><td>User id</td><td>{{user.id}}</td></tr>
+                        <tr><td>Username</td><td>{{customer.username}}</td></tr>
+                        <tr><td>First name</td><td>{{customer.first_name}}</td></tr>
+                        <tr><td>Last name</td><td>{{customer.last_name}}</td></tr>
+                        <tr><td>Email</td><td>{{customer.email}}</td></tr>
+                        <tr><td>Payment ID</td><td>{{payment_id}}</td></tr>
+                        <tr><td>Amount paid</td><td>Rs.{{Total_amount}}</td></tr>
+                        <tr><td>Address</td><td>{{profile.address}}</td></tr>
+                        <tr><td>Phone number</td><td>{{profile.phone_number}}</td></tr>
+                        <tr><td>Date</td><td>{{date}}</td></tr>
+                    </tbody>
+                </table>
+                
+                
+                
+               
+            </div>
+        <div>
+        <hr>
+        <div class='my_divs'>
+            <div>
+                <h2>Order details<h2>
+            </div>
+            {% for product in product_list %}
+                
+                <div class='row '>
+                    <div class='col-xs-12 col-md-6 ' style="padding:0px;">
+                        <image src="../../media/{{product.img}}" id='image_explanation_first' >
+                    </div>
+                    <div class='col-xs-12 col-md-6  justify-content-center' id='image_explanation_first'>
+                        <div class='vertical_center '>
+                            <h3 class='info_title dress-name'>{{product.name}}</h3>
+                            <hr>
+                            
+                            <span id='add_to_cart_form'>
+                                <div  class='cart_item_details_div'>
+                                    Product_id: <span>{{product.id}}</span>  
+                                </div>
+                                <div  class='cart_item_details_div'>
+                                    Size: <span>{{product.size}}</span>  
+                                </div>
+                                
+                                <div  class='cart_item_details_div'>
+                                    Quantity: {{product.quantity}}
+                                
+                                </div>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+        {% if not delivered %}
+            <div>
+                <form method='POST' >
+                    {% csrf_token %}
+                    <input type='submit' value='Delivered' id='delivered_button' class='btn' name='delivered'>
+                
+                </form>
+            </div>
+        {% else %}
+            <div>
+                <form method='POST' >
+                    {% csrf_token %}
+                    <input type='submit' value='Move to undelivered' id='undeliver_button' class='btn' name='undeliver'>
+                
+                </form>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+            

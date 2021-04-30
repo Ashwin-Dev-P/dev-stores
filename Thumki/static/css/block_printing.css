@@ -1,0 +1,22 @@
+.myheading{
+    margin: 3% 0% 3% 0% ;
+    text-align: center;
+    text-transform: uppercase;
+}
+.image_container{
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+
+/*  large screen */
+@media only screen and (min-width: 576px) {
+    .myheading{
+        font-size: 35px;
+    }
+}
+
+/*  Small screen */
+@media only screen and (max-width: 576px) {
+    
+}

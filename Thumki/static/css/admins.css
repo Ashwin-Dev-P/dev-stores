@@ -1,0 +1,24 @@
+h2{
+    font-size: 25px;
+}
+
+.my_divs{
+    margin-top: 70px;
+}
+#my_heading_div{
+    margin-top: 20px;
+}
+#selected_link{
+    background-color: black;
+}
+
+#delivered_button{
+    float:right;
+    background-color: #1D780C;
+    color: white;
+}
+#undeliver_button{
+    float:right;
+    background-color: #A31515;
+    color: white;
+}

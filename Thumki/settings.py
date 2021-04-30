@@ -40,12 +40,10 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    
     'ThumkiStores.apps.ThumkistoresConfig',
     'account.apps.AccountConfig',
     'payments.apps.PaymentsConfig',
     'pages.apps.PagesConfig',
-    'admins.apps.AdminsConfig',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +62,7 @@ ROOT_URLCONF = 'Thumki.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,6 +132,9 @@ ALLOWED_HOSTS = ['*']
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'static'),
@@ -145,3 +146,37 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+
+#Paytm
+PAYTM_COMPANY_NAME = "Thumki"   # For representation purposes 
+PAYTM_INDUSTRY_TYPE_ID = "Retail"     # For staging environment
+PAYTM_CHANNEL_ID = "WEB"
+PAYTM_MERCHANT_KEY = "J_aBhwLSX#Q25M4U"
+PAYTM_MERCHANT_ID = "iStLuI40126446615178"
+PAYTM_CALLBACK_URL = "http://localhost:8000/payments/response/" # Hardcode
+PAYTM_WEBSITE = "WEBSTAGING"
+PAYTM_PAYMENT_GATEWAY_URL = "https://securegw-stage.paytm.in/order/process"
+PAYTM_TRANSACTION_STATUS_URL = "https://securegw-stage.paytm.in/order/status"
+
+
+
+#Email
+#Turn off two factor authentication in mail
+#Less secure app access should be set to ON
+
+#The below lines make the import posssible inside the settings
+import django
+django.setup()
+
+#Grab details from previous folder
+import os, sys
+sys.path.insert(1, os.getcwd()) 
+from ThumkiStores.models import *
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = str(General_info.objects.first().email_id.strip())
+EMAIL_HOST_PASSWORD = str(General_info.objects.first().email_password.strip())

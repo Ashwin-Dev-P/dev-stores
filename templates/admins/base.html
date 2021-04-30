@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap5.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    {% block head %}
+    {% endblock %}
+    <link rel="icon" href="{% static 'images/ThumkiIcon.jpg' %}" type="image/gif" sizes="16x16">
+</head>
+<body>
+    <div class='container '>
+        <div>
+            <header>
+                <div>
+                    <nav class='navbar navbar-expand-sm  navbar-light bg-light justify-content-end ' id='top_nav_bar'>
+                        <ul class="navbar-nav mr-auto">
+
+                            <li class="nav-item" ><a class="nav-link" href="{% url 'orders' 0 %}" >Undelivered</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'orders' 1 %}" >Delivered</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'messages_recieved_func' 0 %}" >Unread Messages</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'messages_recieved_func' 1 %}" >Read Messages</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'subscribed_customers'  %}" >Subscribed</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'admins_log_out'  %}" >Logout</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </div>
+        <div>
+            <main>
+                {% block content %}
+
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+    
+
+</body>
+</html>

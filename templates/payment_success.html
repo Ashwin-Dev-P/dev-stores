@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head1 %}
+
+    <link rel="stylesheet" href="{% static 'css/payment_result.css' %}">
+{% endblock %}
+{%  block content  %}
+    <div class='container' id='my-min-screen-height'>
+        <main style='margin-top:200px;'>
+            <div class='justify-content-center'>
+                <span id='transaction-result'>{{message}}
+                
+                <ul class=' message'>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                
+                </span>
+            </div>
+        </main>
+    </div>
+<!--
+    <script>
+    window.location.replace("http://www.w3schools.com");
+    </script>
+    -->
+{% endblock  %}

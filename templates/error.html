@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    
+    <div id='main' class='text-center' style='margin-top:100px'>
+        <main>
+            <div class='col-xs-12' >
+                <ul class='list-group list-group-flush'>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'contact_us' %}">Contact us for more details.<a>
+            </div>
+        </main>
+    </div>
+{% endblock  %}

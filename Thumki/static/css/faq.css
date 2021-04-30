@@ -1,0 +1,16 @@
+.listtopic{
+    background-color: var(--secondary_colour);
+    background-color: #555555;
+    color: white;
+    
+}
+.listtopic:hover{
+    background-color:  #555555;;
+    color: white;
+}
+.each_faq_block{
+    margin: 5px;
+}
+.down_arrow{
+    float: right;
+}

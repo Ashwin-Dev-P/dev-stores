@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head1 %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contact_us.css' %}">
+    <!--E.164 format CDN for telephone number-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class='container'>
+        <main>
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <h1 id='heading1'>Get in touch</h1>
+                </div>
+                <hr>
+                <div class='col-xs-12 offset-md-3 col-md-6'>
+                    <form method='POST'  autocomplete="on" class='shadow-sm' onsubmit="process(event)" id='myForm'>
+                        {% csrf_token %}
+                        <div class='form-container'>
+                           
+                            <div class="form-group">
+                                <label for='username' class="form-label">Username</label>
+                                <input type='text' class="form-control" name='username' id='username' value={{user}} >
+                            </div>
+
+                            <div class="form-group" >
+                                <label for='email' class="form-label">Email</label>
+                                <input type='email' class="form-control" name='email' id='email' value={{user.email}}
+                                    {% if logged_in %}
+                                        value={{user.email}}
+                                        readonly
+                                    {% endif %}
+                                
+                                >
+                            </div>
+
+                            <div class="mb-3 form-check " style='display:none;' >
+                                <label for='phone-number' class="form-label">Phone number</label>
+                                <input type='tel' class="form-control" name='phone-number' id='phone-number' >
+                            </div>
+
+                            <div class="form-group">
+                                <label for='phone-number' class="form-label">Phone number</label>
+                                <input type="tel"   class="form-control" name="phone" id="phone" style='display:block;' placeholder="0123456789">
+                            </div>
+                           
+                            <div class='form-group'>
+                                    <label for='message_area' class="form-label">Message</label>
+                                    <textarea class="form-control" name='message' id='message_area' placeholder='Type your message here...' ></textarea>
+                            </div>
+
+                            
+                            
+                            <div class="form-group">
+                                <input type='button' name='register' value='Send' class='form-control btn' id='register' onclick="process(event)">
+                            </div>
+
+                            
+
+
+                            
+                            <div class="mb-3 form-check">
+                                <ul class=' message' id='messages'>
+                                    {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!--Script to add E.164 code to the telephone number-->
+    <script>
+        //Selecting the phone number field.
+        const phoneInputField = document.querySelector("#phone");
+        
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            initialCountry: "in",
+            utilsScript:"https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+
+        const infoinput = document.querySelector("#phone-number")
+
+        function process(event) {
+            //Check if the username is entered.
+            const username = document.getElementById('username').value
+            if(username.length < 1){
+                const error_message_div = document.querySelector("#messages")
+                error_message_div.innerHTML = "<li class='list-group-item error'>Enter your name.</li>"
+                return True;
+            }
+
+            //Check if the email is entered.
+            const email = document.getElementById('email').value
+            if(email.length < 6){
+                
+                email_entered = false;
+            }
+            else{
+                email_entered = true;
+            }
+
+            //Check if the user has entered their number.
+            const user_input_num = phoneInputField.value;
+            if(user_input_num.length == 10){
+                console.log("True");
+                event.preventDefault();
+                const phoneNumber = phoneInput.getNumber();
+                console.log(phoneNumber);
+                infoinput.value= `${phoneNumber}`;
+                number_entered = true;
+            }
+            else{
+                number_entered = false;
+                
+            }
+
+            if( email_entered == false && !number_entered ){
+                const error_message_div = document.querySelector("#messages")
+                error_message_div.innerHTML = "<li class='list-group-item error'> Either number or email should be entered. </li>";
+                return false;
+            }
+
+            //Checking if the message is typed before submmiting the form.
+            const message = document.getElementById("message_area").value;
+            if(message.length < 1){
+                const error_message_div = document.querySelector("#messages")
+                error_message_div.innerHTML = "<li class='list-group-item error'>Enter the message.</li>"
+                return false;
+            }
+            else if(message.length > 500 ){
+                const error_message_div = document.querySelector("#messages")
+                error_message_div.innerHTML = "<li class='list-group-item error'>Enter message within 500 letters.</li>"
+                return false;
+            }
+            else{
+                document.getElementById("myForm").submit();
+            }
+            
+        }
+
+    </script>
+
+
+
+{% endblock %}

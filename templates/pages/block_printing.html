@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/block_printing.css' %}">
+{% endblock %}
+{% block content %}
+    <hr>
+    <div class='container min-height'>
+        <main>
+            <div >
+                <h4 class='myheading'>{{info.question1}}</h4>
+                <div class='col-xs-12 offset-md-2 col-md-8 '>
+                    {{info.answer1}}
+                </div>
+                <div class='image_container col-xs-12'>
+                <img src="{{info.image1.url}}" style='width:100%'>
+                </div>
+            </div>
+            {% if info.question2 != 'None' %}
+                <div >
+                    <h4 class='myheading'>{{info.question2}}</h4>
+                    <div class='col-xs-12 offset-md-2 col-md-8 '>
+                        {{info.answer2}}
+                    </div>
+                    <div class='image_container col-xs-12'>
+                    <img src="{{info.image2.url}}" style='width:100%'>
+                    </div>
+                </div>
+            {% endif %}
+        </main>
+    </div>
+{% endblock %}

@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+{% block content %}
+    
+    <div>
+        
+        <main >
+            <!--Carousel-->
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators" id='carousel-indicators'>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                </ol>
+
+                <div class="carousel-inner" >
+                    <!--First slide-->
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{% static 'images/model3.png' %}" alt="First slide">
+
+                        
+                        <div class="carousel-caption d-none d-md-block right">
+                            
+                            <div class='review_div'>
+                                <div class='review-inner-container center vertical-center'>
+                                    <h4 class='review_heading'>{{Review.Review1.review_title}}</h4>
+                                    <p>"{{Review.Review1.review}}"</p>
+                                    - {{Review.Review1.name}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--Second slide-->
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/festival.png' %}" alt="Second slide">
+
+                        <div class="carousel-caption d-none d-md-block right">
+                            <div class='review_div '>
+                                <div class='review-inner-container center vertical-center'>
+                                
+                                    <h4 class='review_heading'>{{Review.Review2.review_title}}</h4>
+                                    <p>"{{Review.Review2.review}}"</p>
+                                    - {{Review.Review2.name}}
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                    
+                </div>
+
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+            </div>
+
+            <!--Info on block prints-->
+            <div class='container text-center'>
+                <h2>Block Prints</h2><hr>
+                <p class='info justify-content-center text-center'>
+                Block printing is the process of printing patterns by means of engraved wooden blocks. 
+                It is the earliest, simplest and slowest of all methods of textile printing.
+                 Block printing by hand is a slow process. 
+                 It is, however, capable of yielding highly artistic results, some of which are unobtainable by any other method
+                
+                </p>
+                <a href="{% url 'shop' %}" class='btn red_anchor_tag'>See our entire collection</a>
+                
+                <hr class='hr_seperation'>
+            </div>
+
+            <!--card_with_image     style="width: 18rem;"  -->
+            <!--Popular categories-->
+            <div id='categories' class='container'>
+                <h2>Popular Categories</h2>
+                <div class='row justify-content-center'>
+                    {% for category in categories %}
+                        <div class='col-xs-12 col-md-6 col-lg-3'>
+                            <a href="{% url 'shop' %}?category_id={{category.id}}">
+                                <div class="card "  >
+                                    <image class="card-img-top" src="{{category.img.url}}" width='400' height='250' >
+                                    
+                                    <div class="card-body text-center">
+                                        <h3 class="card-title" >{{category.name}}</h3>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    
+
+                </div>
+                
+            </div>
+            <hr>
+            <!--Info on block prints-->
+            <div class='container'>
+                <div class='row '>
+                    <div class='col-xs-12 col-md-6 mycol-md-6' style="padding:0px;">
+                        <image src="{{info1.image1.url}}" id='image_explanation_first' >
+                    </div>
+                    <div class='col-xs-12 col-md-6 mycol-md-6 justify-content-center info_explanation ' id='block_print_info1'>
+                        <div class='vertical_center'>
+                            <h3 class='info_title'>{{info1.question1}}</h3>
+                            <p>{{info1.answer1}}
+                            </p>
+                            <a href="{% url 'block_printing' %}?pg={{info1.page_number}}" class='grey_anchor_tag'>Read more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Info on people behind block prints-->
+            <div class='container'>
+                <div class='row '>
+                    <div class='col-xs-12 col-md-6 mycol-md-6 order-md-12' style="padding:0px;">
+                        <image src="{{info2.image1.url}}" id='image_explanation_second' >
+                    </div>
+                    <div class='col-xs-12 col-md-6 mycol-md-6 justify-content-center info_explanation order-md-1' id='block_print_info2'>
+                        <div class='vertical_center'>
+                            <h3 class='info_title'>{{info2.question1}}</h3>
+                            <p>
+                            {{info2.answer1}}
+                            </p>
+                            <a href="{% url 'block_printing' %}?pg={{info2.page_number}}" class='grey_anchor_tag'>Read more</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators" id='carousel-indicators'>
+                    <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+                </ol>
+
+                <div class="carousel-inner" >
+                    <!--First slide-->
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{% static 'images/model3.png' %}" alt="First slide">
+
+                        
+                        <div class="carousel-caption d-none d-md-block center centre">
+                            
+                            <h5><a href="{% url 'shop' %}"><span class="badge badge-primary my_badge" ></span></a></h5>
+                            <div class='review_div '>
+                                <div class='review-inner-container vertical-center center'>
+                                    <h4 class='review_heading'>{{Review.Review3.review_title}}</h4>
+                                    <p>"{{Review.Review3.review}}"</p>
+                                    - {{Review.Review3.name}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--Second slide-->
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/festival.png' %}" alt="Second slide">
+
+                        <div class="carousel-caption d-none d-md-block center centre">
+                            <div class='review_div center'>
+                                <div class='review-inner-container vertical-center center '>
+                                
+                                    <h4 class='review_heading'>{{Review.Review4.review_title}}</h4>
+                                    <p>"{{Review.Review4.review}}"</p>
+                                    - {{Review.Review4.name}}
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                    
+                </div>
+
+                <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+            </div>
+            
+
+            <!--Best Seller-->
+            <div class='container ' id='top_sales'>
+                <h2>Best Seller</h2>
+                <div class='row justify-content-center'>
+                    {% for dress in top_sales_dress %}
+                        <div class='col-xs-12 col-md-6 col-lg-3 product'>
+                            <a href='view/{{dress.id}}'>
+                                <div class="card ">
+                                    
+                                    <image class="card-img-top" src="{{dress.img.url}}" width='400' height='250' >
+                                    
+                                    <div class="overlay">
+                                        <div class="text">
+                                            <h5 class="card-title">{{dress.name}}</h5>
+                                            <p>Sales count = {{dress.sale_count}}</p>
+                                            <p>Rs.{{dress.price}}</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <hr>
+            </div>
+
+            <!--Final review-->
+            <div class='final_review '>
+                <image src="{% static 'images/BlockPrintingCarousel.jpg' %}" id='final_review'>
+                <div class='review_div top-left review_div_container'>
+                    <div class='review-inner-container vertical-center center'>
+                    <h4 class='review_heading'>{{Review.Review5.review_title}}</h4>
+                    <p>"{{Review.Review5.review}}"</p>
+                    <span class='review_author'>- {{Review.Review5.name}}</span>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,558 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+{% endblock %}
+{% block content %}
+    
+    <div class='container'>
+
+        <main>
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="breadcrumb-item " ><a href="{% url 'shop'  %}">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{dress.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+            
+
+            <div>
+                {{message}}
+                {{response_data}}{{response_data.message}}
+            </div>
+
+            
+
+            <div class='container'>
+                <div class='row '>
+                    <div class='col-xs-12 col-md-6 ' style="padding:0px;">
+                        <image src="{{dress.img.url}}" id='image_explanation_first' >
+                    </div>
+                    <div class='col-xs-12 col-md-6  justify-content-center info_explanation ' id='image_explanation_first'>
+                        <div class='vertical_center '>
+                            <h3 class='info_title dress-name'>{{dress.name}}</h3>
+                            
+                            <span class='price'>Rs.{{dress.price}}</span>
+
+                            <span id='availability'>
+                                {% if dress.availability %}
+                                    In Stock
+                                {% else %}
+                                    Sold
+                                {% endif %}
+                            
+                            </span>
+                            <hr>
+                            
+                            
+                            
+                            <form method='POST' id='add_to_cart_form'>
+                                {% csrf_token %}
+                                
+                                <div id='size'>Size</div>
+                                
+
+                                {% if not size_found %}
+                                    <div class='form-check form-check-inline col-xs-12'>
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option1" autocomplete="off" value='extra_small' required>
+                                        <label class="btn btn-secondary my-radio-button" for="option1">xs</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option2" autocomplete="off" value="small">
+                                        <label class="btn btn-secondary my-radio-button" for="option2">s</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option3" autocomplete="off" value="medium">
+                                        <label class="btn btn-secondary my-radio-button" for="option3">m</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option4" autocomplete="off" value="large">
+                                        <label class="btn btn-secondary my-radio-button" for="option4">l</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option5" autocomplete="off" value="extra_large">
+                                        <label class="btn btn-secondary my-radio-button" for="option5">xl</label>
+                                        </div>
+
+
+                                    </div>
+                                {% else %}
+                                    <div class='form-check form-check-inline col-xs-12'>
+                                        
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option1" autocomplete="off" value='extra_small' required 
+                                        
+                                        {% if not sizes.extra_small %}
+                                            disabled
+                                        {% endif %}
+                                        >
+                                        <label class="btn btn-secondary my-radio-button" for="option1">xs</label>
+                                        </div>
+                                        
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option2" autocomplete="off" value="small"
+                                        
+                                        {% if not sizes.small %}
+                                            disabled
+                                        {% endif %}
+                                        
+                                        >
+                                        <label class="btn btn-secondary my-radio-button" for="option2">s</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option3" autocomplete="off" value="medium"
+                                        
+                                        {% if not sizes.medium %}
+                                            disabled
+                                        {% endif %}
+
+                                        >
+                                        <label class="btn btn-secondary my-radio-button" for="option3">m</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option4" autocomplete="off" value="large"
+                                        
+                                        {% if not sizes.large %}
+                                            disabled
+
+                                        {% endif %}
+                                        
+                                        >
+                                        <label class="btn btn-secondary my-radio-button" for="option4">l</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" class="btn-check" name="size" id="option5" autocomplete="off" value="extra_large"
+                                        
+                                        {% if not sizes.extra_large %}
+                                            disabled
+                                        {% endif %}
+
+                                        >
+                                        <label class="btn btn-secondary my-radio-button" for="option5">xl</label>
+                                        </div>
+
+
+                                    </div>
+
+                                
+                                {% endif %}
+
+                                <br>
+
+
+                                <div id='quantity_div'>
+                                    <label for='quantity'>Quantity</label>
+                                    
+                                    <br>
+                                    <span class='minus' id='minus' onclick="decrease(event)"><i class="fa fa-minus" aria-hidden="true"></i></span><span class='quantity'><input type='number' value='1' class='form-control'  id='quantity' name='quantity' min='1'></input></span><span id='plus' class='plus' onclick='increase(event)'><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    
+                                </div>
+
+                                <!--Error message box.-->
+                                <div class="col-xs-12" style='width:100%;'>
+                                    <ul class=' message' id='add_to_cart_messages'>
+                                        {% for message in messages %}
+                                            <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <input type='submit' value='Add to cart' class="btn btn-primary" id='add_to_cart' name='add_to_cart'>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+                
+                
+            
+
+            <div class='col-xs-12'>
+                <!-- Tab links -->
+                <div class="tab scrollmenu">
+                    
+                    <button class="tablinks" onclick="openTab(event, 'Description')" id='Description_button'>Description <i class="fa fa-caret-down icon-only-on-mobile-view"></i></button>
+                    <button class="tablinks" onclick="openTab(event, 'Reviews')">Reviews <i class="fa fa-caret-down icon-only-on-mobile-view"></i></button>
+                </div>
+
+                <!--Description Tab content -->
+                <div id="Description" class="tabcontent justify-content-center" >
+                    <div class='container'>
+                        <div class='description_subdivision'>
+                            <span class='description_subtitle'>Material:</span>
+                            <span class='description_value'>{{dress.material}}</span>
+                        </div>
+                        <div class='description_subdivision'>
+                            <span class='description_subtitle'>Category:</span>
+                            <span class='description_value'>{{category_name}}</span>
+                        </div>
+                        <div class='description_subdivision'>
+                            <span class='description_subtitle'>Additional info:</span><br>
+                            <span class='description_value'>{{dress.additional_info}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!--Reviews tab content-->
+                <div id="Reviews" class="tabcontent">
+                    <div class='container'>
+                        <div id='reviews_head_div'>
+                            <div>
+                                <h3>Your reviews</h3>
+                            </div>
+                            <div>
+                                Based on {{ reviews|length }} reviews<br>
+                                {% if not logged_in %}
+                                    <span id='review_toggle'><a href="{% url 'login' %}">Login to write a review</a></span>
+                                {% elif logged_in and not review_given %}
+                                    <span id='review_toggle'>Write your review</span>
+                                
+                                {% elif logged_in and review_given %}
+                                    <span id='review_toggle'>You have already reviewed the product.</span> 
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    {% if logged_in and not review_given %}
+                    
+                    <div class="container" id='review_form_div'>
+                    
+                        <div class="card shadow">
+                            <form method="POST" id='myForm' autocomplete=off>
+                                <div class='container'>
+                                    <div class='text-center'>
+                                        <h2>Write a review</h2>
+                                    </div>
+                                    {% csrf_token %} 
+                                    <input type='number' min='0' class='form-control my-form-input' id='product_id' value='{{dress.id}}' readonly hidden>
+                                    <div class='col-xs-12'>
+                                        <div class='review_titles'>
+                                            <label for='review_text_area'>Name</label>
+                                        </div>
+                                        <input type='text' class='form-control my-form-input' id='name' placeholder='Enter your name.' value='{{user}}'>
+                                    </div>
+
+
+                                    <input type='number' id='my_id' name='my_id' value="{{dress.id}}" class='form-control' readonly hidden>
+                                    <!--Hidden rating input box-->
+                                    <input class='form-control' type='number' id='rating_num' min='0' max='5' name='rating' value='0' style='display:none'>
+
+
+                                    
+                                    <!--Star rating system-->
+                                    <div id='rating_div' class='col-xs-12'>
+                                        <div>
+                                            Rating
+                                        </div>
+                                        <div>
+                                        <i class="fa fa-star star" id='star1' onclick="rating_process(event,1)" ></i>
+                                        <i class="fa fa-star star" id='star2' onclick="rating_process(event,2)"></i>
+                                        <i class="fa fa-star star" id='star3' onclick="rating_process(event,3)"></i>
+                                        <i class="fa fa-star star" id='star4' onclick="rating_process(event,4)"></i>
+                                        <i class="fa fa-star star" id='star5' onclick="rating_process(event,5)"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class='col-xs-12'>
+                                        <div class='review_titles'>
+                                            <label for='review_text_area'>Review title</label>
+                                        </div>
+                                        <input type='text' class='form-control' id='review_title' name='review_title' placeholder='Give your review a title.'>
+                                    </div>
+
+                                    <div class='col-xs-12'>
+                                        <div class='review_titles'>
+                                            <label for='review_text_area'>Body of review(1500)</label>
+                                        </div>
+                                        <textarea class="form-control" id="review_text_area" name='customerreview' placeholder='Type your review here...'></textarea>
+                                    </div>
+                                    <!--Error message box.-->
+                                    <div class="col-xs-12" style='width:90%;margin-left:5%;'>
+                                        <ul class=' message' id='messages'>
+                                            {% for message in messages %}
+                                                <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                
+                                    
+                                    <input type='submit' class='btn' id='customer_review_button' name='customer_review_button'>
+                                </div>
+                            </form>
+                        </div>
+                    
+                    </div>
+                    {% endif %}
+                    <!--Reviews-->
+                    <div>
+                        <p>
+                            {% for review in reviews %}
+                                <div class='review'>
+                                    
+                                    {% with ''|center:review.rating as range %}
+                                    {% for _ in range %}
+                                        <i class="fa fa-star yellow-star" id='star1'  ></i>
+                                    {% endfor %}
+                                    {% endwith %}
+
+
+                                    <h5 id='reviews_individual_titles'>{{review.review_title}}</h5>
+                                    <p class="card-text">By {{review.name}}</p>
+                                    <p class="card-text">{{review.review}}</p>
+                                    
+                                </div>
+                            {% endfor %}
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            
+
+            <div class='container ' id='top_sales'>
+                <h2>Related products</h2>
+                <div class='row justify-content-center'>
+                    {% for dress in top_sales_dress %}
+                        <div class='col-xs-12 col-md-6 col-lg-3 product'>
+                            <a href="{{dress.id}}">
+                                <div class="card ">
+                                    
+                                    <image class="card-img-top" src="{{dress.img.url}}" width='400' height='250' >
+                                    
+                                    <div class="overlay">
+                                        <div class="text">
+                                            <h5 class="card-title">{{dress.name}}</h5>
+                                            <p>Sales count = {{dress.sale_count}}</p>
+                                            <p>Rs.{{dress.price}}</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                
+            </div>
+        </main>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" 
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+            crossorigin="anonymous"></script>
+{% if user %}  
+    <script type="text/javascript" >
+    $( "#review_toggle" ).click(function() {
+            
+        $( "#review_form_div" ).toggle( );
+            
+    });
+    </script>
+{% else %}
+    <script type="text/javascript" >
+    $( "#review_toggle" ).click(function() {
+            
+        $( "#login_to_continue_div" ).toggle( );
+            
+    });
+    </script>
+{% endif %}
+
+
+{% endblock %}
+{% block foot %}
+    
+  
+
+    <script type="text/javascript">
+        //Quantity increase using js
+        const plus = document.getElementById('plus')
+        const minus = document.getElementById('minus')
+
+        function increase(event){
+            quantity = document.getElementById('quantity').value;
+            
+            quantity = parseInt(quantity) + 1;
+            quantity = document.getElementById('quantity').value = quantity;
+        }
+        function decrease(event){
+            if( parseInt(quantity) > 1 ){
+                quantity = document.getElementById('quantity').value;
+                quantity = parseInt(quantity) - 1;
+                document.getElementById('quantity').value = quantity;
+            }
+            
+        }
+
+        
+        //Star rating 
+        function rating_process(event,star_num){
+            
+            const input = document.getElementById('rating_num');
+            input.value = star_num;
+
+            var str1 = 'star';
+            var str2 = star_num;
+            var res = str1.concat(str2);
+
+            for(i = 1;i<= star_num;i++){
+                var str1 = 'star';
+                var str2 = i;
+                var res = str1.concat(str2);
+
+                current_star = document.getElementById(res);
+                console.log(current_star);
+                current_star.style.color = 'yellow';
+            }
+            
+            for(i = star_num+1;i<=5;i++){
+                var str1 = 'star';
+                var str2 = i;
+                var res = str1.concat(str2);
+
+                current_star = document.getElementById(res);
+                console.log(current_star);
+                current_star.style.color = 'black';
+            }
+            
+            
+            return true;
+        }
+
+        
+
+        //Validate review form.
+        function submit_review(event){
+            //Validate name
+            name = document.getElementById('name').value;
+            if(name.length < 1){
+                const error_message_div = document.querySelector("#messages");
+                error_message_div.innerHTML = "<li class='list-group-item error'>Enter your name</li>";
+                return false;
+            }
+
+            review_title = document.getElementById('review_title').value;
+            if(review_title.length < 1){
+                const error_message_div = document.querySelector("#messages");
+                error_message_div.innerHTML = "<li class='list-group-item error'>Enter your review title</li>";
+                return false;
+            }
+           
+            //Validate review.
+            review_message = document.getElementById('review_text_area').value;
+            if( review_message.length < 1 ){
+                const error_message_div = document.querySelector("#messages");
+                error_message_div.innerHTML = "<li class='list-group-item error'>Enter your review</li>";
+                return false;
+            }
+
+            if(review_message.length > 500){
+                const error_message_div = document.querySelector("#messages");
+                error_message_div.innerHTML = "<li class='list-group-item error'>Enter your review in less than 500 letters.</li>";
+                return false;
+            }
+
+            //Validate star rating.
+            rating = document.getElementById('rating_num').value;
+            if( parseInt(rating) > 5 || parseInt(rating) < 1 ){
+                const error_message_div = document.querySelector("#messages");
+                error_message_div.innerHTML = "<li class='list-group-item error'>Select a rating.</li>";
+                return false;
+            }
+            return true
+            
+        }
+
+        
+        //Review form submition
+        $(document).on('submit','#myForm',function(e){
+            e.preventDefault();
+            if(! submit_review(event)){
+                return false;
+            }
+            
+            $.ajax({
+                type:'POST',
+                url:"{% url 'viewtest'  %}",
+                data:
+                {
+                    name:$("#name").val(),
+                    rating:$("#rating_num").val(),
+                    review_title:$("#review_title").val(),
+                    customerreview:$("#review_text_area").val(),
+                    my_id:$("#my_id").val(),
+                    product_id:$("#product_id").val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                
+                success:function(data){
+                    
+                    
+                    const error_message_div = document.querySelector("#messages");
+                    if(data.msgType === 'error'){
+                        msgType = "error";
+                    }
+                    else if(data.msgType === 'success'){
+                        msgType = "success";
+                    }
+                    else if(data.msgType === 'warning'){
+                        msgType = "warning";
+                    }
+                    else{
+                        msgType = "info";
+                    }
+
+                    string1 = "<li class='list-group-item " ;
+                    
+                    string3 = "'>";
+                    message_string = data.msg;
+                    string4 = "</li>";
+                    string = " ";
+                    string = string.concat(string1,msgType,string3,message_string,string4);
+                    error_message_div.innerHTML = string;
+            
+                    
+                    
+                    
+                        
+                    
+                    
+                    
+                    
+
+                    setTimeout(fade_out, 5000);
+
+                    function fade_out() {
+                        $("#messages").fadeOut().empty();
+                    }
+
+                }
+            })
+        });
+
+
+        
+    
+    </script>
+    <script src="{% static 'js/tab.js' %}"></script>
+{% endblock %}
+

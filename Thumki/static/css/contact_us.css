@@ -1,0 +1,11 @@
+
+textarea{
+    margin: 0px;
+}
+.form-group{
+    width: 80%;
+    margin: 5% 10% 5% 10%;
+}
+.iti--allow-dropdown{
+    display: block;
+}

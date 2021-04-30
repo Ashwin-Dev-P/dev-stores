@@ -1,0 +1,253 @@
+
+:root {
+    --availability_colour:#AAA9A9;
+    --button_background_colour: black;
+}
+
+
+/*  For disappearing the arrows in input   */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.breadcrumb{
+    background-color: #f8f9fa;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 9%;
+   
+}
+
+.info_explanation{
+    padding: 0% 5% 0% 5%;
+}
+
+.dress-name{
+    font-size: 30px;
+    display: block;
+    text-transform: capitalize;
+    margin-bottom: 0%;
+}
+.price{
+    color: #af1f31;
+    font-size: 25px;
+}
+.my-radio-button{
+    width: 47px;
+    text-transform: uppercase;
+    
+}
+.disabled_input{
+    background-color: black !important ;
+}
+.plus{
+    border: 1px solid black;
+    padding: 6px 10px 6px 10px;
+    background-color: #ffffff;
+    border: 1px solid #AAA9A9;
+}
+.quantity{
+    display: inline-block;
+    
+
+}
+.minus{
+    border: 1px solid black;
+    padding: 6px 10px 6px 10px;
+    background-color: #ffffff;
+    border: 1px solid #AAA9A9;
+}
+
+
+
+.form-check-inline input[type="radio"]:checked + label {
+    background-color:black;
+    
+}
+.btn-secondary{
+    color: black;
+    background-color: #f8f9fa;
+}
+
+
+/* Style the tab */
+.tab {
+    margin-top: 40px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    scroll-behavior: smooth;
+    
+
+  }
+  
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    width: 50%;  
+    height: 100%;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    min-height: 200px;
+  }
+
+.star{
+    width: 15px;
+    cursor: pointer;
+}
+.review_titles{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+.my-form-input{
+    margin-bottom: 0%;
+}
+.yellow-star{
+    color: yellow;
+}
+.description_subdivision{
+    margin-top: 1% ;
+
+}
+
+.description_subtitle{
+    font-weight: 550;
+}
+.my-form-input-add-to-cart{
+    width: 100%;
+}
+
+#reviews_head_div{
+    margin-bottom: 50px;
+}
+#review_form_div{
+    display: none;
+}
+
+#availability{
+    background-color: var(--availability_colour);
+    padding: 2px 10px 2px 10px;
+    float: right ;
+    color: #ffffff;
+}
+
+#size{
+    margin: 10px 0px 10px 0px;
+}
+#quantity_div{
+    margin: 20px 0px 10px 0px;
+}
+#quantity{
+    width: 50px;
+    margin: 5px 0px 5px 0px;
+}
+#add_to_cart{
+    width:100%;
+    background-color: var(--button_background_colour);
+    border: 1px solid white;
+    text-transform: uppercase;
+    margin: 20px 0px 0px 0px;
+}
+
+#review_text_area{
+    margin-top: 0%;
+    width: 90%;
+    min-height: 100px;
+}
+#customer_review_button{
+    float:right;
+    margin-right: 5%;
+    
+    color: #ffffff;
+    background-color: var(--button_background_colour);
+}
+#rating_div{
+    width:90%;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#my_id{
+    margin-top: 5%;
+}
+#review_title{
+    margin-bottom: 0%;
+}
+#review_toggle{
+    cursor: pointer;
+    color: #af1f31;
+}
+#reviews_individual_titles{
+    text-transform: uppercase;
+}
+
+
+@media only screen and (min-width: 780px) {
+    
+
+    #image_explanation_first{
+        min-height: 500px;
+        width: 98%;
+    }
+    .icon-only-on-mobile-view{
+        display: none;
+    }
+    #review_toggle{
+        
+        float:right;
+    }
+    
+}
+@media only screen and (max-width: 780px) {
+    
+    .tab button {
+        width: 100%;  
+        border: 1px solid;
+        
+    }
+    #review_form_div{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .review{
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-left: 1px;
+        padding-right: 1px;
+        width: 100%;
+    }
+    
+    
+}
+

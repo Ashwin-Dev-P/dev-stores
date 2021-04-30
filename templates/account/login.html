@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head1 %}
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+{% endblock %}
+{% block content %}
+    <div class='container'>
+        <main>
+            <div class='row'>
+                <div class='col-xs-12'>
+                    <h1 id='heading1'>Customer Login</h1>
+                </div>
+                <hr>
+                <div class='col-xs-12 offset-md-2 col-md-8 offset-lg-3 col-lg-6'>
+                    <form method='POST'  autocomplete="on" class='shadow-sm'>
+                        {% csrf_token %}
+                        <div class='form-container'>
+                            <div class="mb-3 form-check">
+                                <label for='username' class="form-label">Username</label>
+                                <input type='text' class="form-control" name='username' id='username'>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <label for='password' class="form-label">Password</label>
+                                <input type='password' class="form-control" name='password' id='password'>
+                            </div>
+
+                            
+                            
+                            <div class="mb-3 form-check">
+                                <input type='submit' name='register' value='login' class='form-control btn' id='register'>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <p class='text-center'>
+                                New customer? <a href="{% url 'sign_up' %}" class='red-anchor-tag'>Sign up</a>
+                                </p>
+                            </div>
+
+
+
+                            <div class="mb-3 form-check">
+                                <ul class=' message'>
+                                    {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+
+{% endblock %}

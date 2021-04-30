@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="{% static 'images/ThumkiIcon.jpg' %}" type="image/gif" sizes="16x16">
+
+
+   
+</head>
+<body style='background-color: #f1f1f1 ;'>
+     
+    <div style='background-color: #f1f1f1 ;'>
+        <div style=' width:90%;margin:2.5%; '>
+            <div>
+                <h1 style='text-align:center'>Thumki Stores</h1>
+                <div style='margin-top:1%;'><span >Your user id: {{user_id}}</span></div>
+                <div style='margin-top:1%;'><span>Your payment id: {{payment_id}}</span></div>
+                <div style='margin-top:1%;'>
+                    <table style='
+                        border:1px solid black;
+           
+                        background-color: white;
+                        font-family: arial, sans-serif;
+                        border-collapse: collapse;
+                        
+                    
+                    '>
+                        <thead>
+                            
+                            <th style='
+                            border: 1px solid black;'
+                            >S.no</th>
+                            <th style='
+                            border: 1px solid black;'
+                            >Product name</th>
+                            <th style='
+                            border: 1px solid black;'
+                            >Quantity</th>
+                            <th style='
+                            border: 1px solid black;'
+                            >Size</th>
+                        
+                        </thead>
+                        <tbody>
+                            {% for product in cart_products %}
+                            <tr style='border: 1px solid black;'>
+                                <td style='text-align:center; border: 1px solid black;'>{{forloop.counter}}</td>
+                                <td style='text-align:center; border: 1px solid black;'>{{product.name}}</td>
+                                <td style='text-align:center; border: 1px solid black;'>{{product.quantity}}</td>
+                                <td style='text-align:center; border: 1px solid black;'>{{product.size}}</td>
+                            </tr>
+                            {% endfor %}
+                
+                        </tbody>
+                        
+                    </table>
+                    <div style='margin-top:1%;'>
+                        Your order will be delivered soon.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.caps{
+    text-transform: uppercase;
+}
+.dress-name{
+    font-size: 15px;
+    display: block;
+}
+.price{
+    color: #af1f31;
+    font-size: 15px;
+}
+.sold{
+    position: absolute;
+    top:0;
+    right: 0;
+    padding: 5px 15px 5px 15px;
+    background-color: #af1f31;
+    color: #ffffff;
+}

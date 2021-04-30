@@ -1,0 +1,58 @@
+{% extends 'admins/base.html' %}
+{% load static %}
+
+{% block head  %}
+    <link rel="stylesheet" href="{% static 'css/admins.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div id='my_heading_div'>
+            <h1>
+            {% if delivered %}
+                Delivered
+            {% else %}
+                Not delivered
+            {% endif %}
+            </h1>
+        </div>
+        <div>
+            <div class="mb-3 form-check">
+                <ul class=' message' id='messages'>
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }} list-group-item"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+        </div>
+        <div>
+            <table class='table table-bordered'>
+                <thead>
+                    <tr>
+                    <th>S.no</th>
+                    <th>Name</th>
+                    <th>Payment id</th>
+                    
+                    <th>Date</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders_list %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{order.name}}</td>
+                        <td>{{order.payment_id}}</td>
+                        
+                        <td>{{order.date}}</td>
+                        <td><a href="{% url 'orders_info' order.payment_id %}">Enter</a></td> 
+                            
+                    </tr>
+                    {%  endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

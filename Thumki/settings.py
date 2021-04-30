@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'ThumkiStores.apps.ThumkistoresConfig',
+    'account.apps.AccountConfig',
+    'payments.apps.PaymentsConfig',
     'pages.apps.PagesConfig',
+    'admins.apps.AdminsConfig',
 ]
 
 MIDDLEWARE = [

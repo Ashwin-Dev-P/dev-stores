@@ -144,8 +144,7 @@ STATICFILES_DIRS = [
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+
 
 
 #Paytm
@@ -180,3 +179,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = str(General_info.objects.first().email_id.strip())
 EMAIL_HOST_PASSWORD = str(General_info.objects.first().email_password.strip())
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())

@@ -28,7 +28,7 @@ def send_mail(cart_products,user_id,payment_id):
     plain_message = strip_tags(html_message)
     
     
-    email = User.objects.get(id=user_id).email
+    #email = User.objects.get(id=user_id).email
     
     email_from = settings.EMAIL_HOST_USER
     
@@ -38,47 +38,57 @@ def send_mail(cart_products,user_id,payment_id):
 
 
 
-def move_cart_to_orders(id,payment_id): 
+def move_cart_to_orders(id,payment_id,request): 
     
     cart_products = Cart.objects.filter(user_id=id)
     
-    for product in cart_products:
-        product_id=product.product_id   
-        size = product.size
-        quantity = product.quantity
-        user_id = id    
-        
-        product_sale_quantity_to_increase = Dress.objects.filter(id=product_id).first()
-        product_sale_quantity_to_increase.sale_count = product_sale_quantity_to_increase.sale_count + quantity
-        product_sale_quantity_to_increase.save()
-        
-        orders = Orders(product_id=product_id,size=size,quantity=quantity,user_id=id,payment_id=payment_id)
-        orders.save()
-    Final_pay_amount = 0
-    cart_items_list = []
-    for items in cart_products:
-        fetched_item = Dress.objects.filter(id=items.product_id).first()
-        
-        if(fetched_item.availability):
-        
-            data =  {  
-                'id' :  items.id ,
-                'name': fetched_item.name,
-                'size': items.size ,
-                'price': fetched_item.price ,
-                'quantity': items.quantity ,
-                'total': items.quantity * fetched_item.price  ,
-                'product_id': items.product_id ,
-                'img_url': fetched_item.img.url,
-                
-            }    
-            total_price =  data['price'] * data['quantity']
-            Final_pay_amount = Final_pay_amount + total_price
-            cart_items_list.append(data)
+    try:
+        for product in cart_products:
+            product_id=product.product_id   
+            size = product.size
+            quantity = product.quantity
+            user_id = id    
+            
+            product_sale_quantity_to_increase = Dress.objects.filter(id=product_id).first()
+            product_sale_quantity_to_increase.sale_count = product_sale_quantity_to_increase.sale_count + quantity
+            product_sale_quantity_to_increase.save()
+            
+            orders = Orders(product_id=product_id,size=size,quantity=quantity,user_id=id,payment_id=payment_id)
+            orders.save()
+    except:
+        messages.error(request,"Error moving cart items to orders")
+
+    try:
+        Final_pay_amount = 0
+        cart_items_list = []
+        for items in cart_products:
+            fetched_item = Dress.objects.filter(id=items.product_id).first()
+            
+            if(fetched_item.availability):
+            
+                data =  {  
+                    'id' :  items.id ,
+                    'name': fetched_item.name,
+                    'size': items.size ,
+                    'price': fetched_item.price ,
+                    'quantity': items.quantity ,
+                    'total': items.quantity * fetched_item.price  ,
+                    'product_id': items.product_id ,
+                    'img_url': fetched_item.img.url,
+                    
+                }    
+                total_price =  data['price'] * data['quantity']
+                Final_pay_amount = Final_pay_amount + total_price
+                cart_items_list.append(data)
+    except:
+        messages.error(request,"Error gathering details about cart products for mail")
+
     send_mail(cart_items_list,id,payment_id)
     
-    cart_products.delete()    
-     
+    try:
+        cart_products.delete()   
+    except: 
+        messages.error(request,"Unable to remove cart products")
 
 
 
@@ -105,12 +115,13 @@ def payment_success(request):
             try:
                 payment_details = PaymentDetails_razorpay(user_id=request.user.id,payment_id=razorpay_payment_id)
                 payment_details.save()
-                messages.success(request,'Transaction success')
+                messages.success(request,'Payment details saved')
                 try:
-                    move_cart_to_orders(request.user.id,razorpay_payment_id)
+                    move_cart_to_orders(request.user.id,razorpay_payment_id,request)
+                    messages.success(request,"Moved cart items to orders")
                 except:
-                    messages.error(request,"unable to move cart items to orders")
-                messages.success(request,'Payment details have been sent to your mail')
+                    messages.error(request,"Unable to move cart items to orders")
+                #messages.success(request,'Payment details have been sent to your mail')
             except:
                 messages.error(request,'Error saving billing details to database.Please contact us.')
         

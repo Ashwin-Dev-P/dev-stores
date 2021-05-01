@@ -631,7 +631,7 @@ def confirm_details(request,edit):
                 profile.phone_number = phone_number
                 profile.save()
             else:
-                profile_form = Profile(address=address,phone_number=phone_number)
+                profile_form = Profile(address=address,phone_number=phone_number,user_id=request.user.id)
                 profile_form.save()               
                 
                 

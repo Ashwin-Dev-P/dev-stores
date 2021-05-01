@@ -26,20 +26,12 @@ def send_mail(cart_products,user_id,payment_id,request):
     try:
         subject = 'Thumki payment details'
         html_message = render_to_string('mail_template.html', {'cart_products': cart_products,'user_id':user_id,'payment_id':payment_id})
-        
         plain_message = strip_tags(html_message)
-        print("plain etxpassed")
-        
-        #email = User.objects.get(id=user_id).email
-        
         email_from = settings.EMAIL_HOST_USER
-        print("Host email recieved")
-        
-        
         to = User.objects.get(id=user_id).email
-        print("Customer email recieved")
         try:
             mail.send_mail( subject, plain_message, email_from, [to], html_message=html_message )  
+            messages.success(request,'Payment details have been sent to your mail')
         except:
             messages.info(request,"Mail not sent")
         
@@ -125,13 +117,12 @@ def payment_success(request):
             try:
                 payment_details = PaymentDetails_razorpay(user_id=request.user.id,payment_id=razorpay_payment_id)
                 payment_details.save()
-                messages.success(request,'Payment details saved')
+                messages.success(request,'Payment success')
                 try:
                     move_cart_to_orders(request.user.id,razorpay_payment_id,request)
-                    messages.success(request,"Moved cart items to orders")
                 except:
                     messages.error(request,"Unable to move cart items to orders")
-                #messages.success(request,'Payment details have been sent to your mail')
+                
             except:
                 messages.error(request,'Error saving billing details to database.Please contact us.')
         

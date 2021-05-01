@@ -11,7 +11,7 @@ import datetime
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    img = models.ImageField(upload_to='pics/categories')
+    img = models.ImageField(upload_to='Thumki/static/images/pics/categories')
     description = models.CharField(max_length=1000,default='Category descriptions')
     
     class Meta:
@@ -23,7 +23,7 @@ class Category(models.Model):
 class Dress(models.Model):
     category = models.ForeignKey(Category,on_delete=models.CASCADE,default=4)
     name = models.CharField(max_length=255)
-    img = models.ImageField(upload_to='pics')
+    img = models.ImageField(upload_to='Thumki/static/images/pics')
     desc = models.TextField()
     price = models.IntegerField()
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
@@ -133,8 +133,8 @@ class Profile(models.Model):
 
 class General_info(models.Model):
     store_name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='pics')
-    fav_icon = models.ImageField(upload_to='pics')
+    image = models.ImageField(upload_to='Thumki/static/images/pics')
+    fav_icon = models.ImageField(upload_to='Thumki/static/images/pics')
     year = models.IntegerField()
     instagram_link = models.CharField(max_length=500)
     facebook_link = models.CharField(max_length=500)

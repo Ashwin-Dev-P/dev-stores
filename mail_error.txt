@@ -1,0 +1,5 @@
+Mail cannot be sent from admin to admin itself.
+Mail needs to be sent to valid mail
+check mail and password in database
+
+Always activate django heroku at the bottom of the settings
